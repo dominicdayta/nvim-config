@@ -1,0 +1,3 @@
+# Ignore temporary swap or backup files created by vim while editing
+*.swp
+*.swo

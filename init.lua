@@ -7,7 +7,7 @@ vim.opt.expandtab = true
 
 -- line numbers
 vim.opt.number = true
-vim opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

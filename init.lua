@@ -36,3 +36,20 @@ require("lazy").setup({
     { import = "plugins" },
   },
 })
+
+-- Force Neovim to use OSC 52 for clipboard operations
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
+
+-- Automatically sync the unnamed register with the system clipboard
+-- This makes a standard 'y' act like a system copy
+vim.opt.clipboard = 'unnamedplus'

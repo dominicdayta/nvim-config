@@ -25,6 +25,20 @@ return {
           vim.opt_local.scrolloff = 999
           vim.cmd("Limelight")
 
+          -- 1. TURN OFF LSP FOR THIS BUFFER
+          -- This detaches any active LSP servers from the current writing file
+          local clients = vim.lsp.get_clients({ bufnr = 0 })
+          for _, client in ipairs(clients) do
+            vim.lsp.buf_detach_client(0, client.id)
+          end
+
+          -- 2. TURN OFF AUTOCOMPLETION
+          -- Safely instructs nvim-cmp to pause suggestions
+          local has_cmp, cmp = pcall(require, "cmp")
+          if has_cmp then
+            cmp.setup.buffer({ enabled = false })
+          end
+
           -- Safely instruct Lualine to switch to a clean prose layout
           local has_lualine, lualine = pcall(require, "lualine")
           if has_lualine then
@@ -48,6 +62,16 @@ return {
           vim.opt_local.scrolloff = 5
           vim.cmd("Limelight!")
 
+          -- 3. RE-ENABLE AUTOCOMPLETION
+          -- Restores standard completion behavior when you exit
+          local has_cmp, cmp = pcall(require, "cmp")
+          if has_cmp then
+            cmp.setup.buffer({ enabled = true })
+          end
+          
+          -- Note: LSP will automatically reconnect the next time you open a code file, 
+          -- but if you want to force it right away on this buffer, you can run :LspStart
+
           -- Reload your regular Lualine programming layout when exiting
           local has_lualine, lualine = pcall(require, "lualine")
           if has_lualine then
@@ -59,4 +83,3 @@ return {
     end
   }
 }
-

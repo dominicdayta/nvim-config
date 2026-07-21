@@ -52,4 +52,4 @@ vim.g.clipboard = {
 
 -- Automatically sync the unnamed register with the system clipboard
 -- This makes a standard 'y' act like a system copy
-vim.opt.clipboard = 'unnamedplus'
+vim.opt.clipboard = 'unnamed'
